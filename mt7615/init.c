@@ -298,7 +298,9 @@ void mt7615_init_txpower(struct mt7615_dev *dev,
 			index = mt7615_eeprom_get_target_power_index(dev, chan, j);
 			if (index < 0)
 				continue;
-
+			 if (eep[index] == 0 && mt7615_ext_pa_enabled(dev, chan->band)) {
+                               eep[index] = 0x17; //20dB
+                       }
 			target_power = max(target_power, eep[index]);
 		}
 
